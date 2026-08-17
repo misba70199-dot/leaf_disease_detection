@@ -2,5 +2,5 @@ streamlit
 tensorflow
 keras
 opencv_python_headless
-gdown
+gdown>=4.6.0
 ipykernel
