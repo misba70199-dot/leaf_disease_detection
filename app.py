@@ -4,16 +4,16 @@ import numpy as np
 import gdown
 import os
 
-file_id='1IvSyBlzxBky9a9SbRxpHpTgAHEGKvxNY'
-url='https://drive.google.com/file/d/1IvSyBlzxBky9a9SbRxpHpTgAHEGKvxNY'
-model_path="trained_plant_disease_model.keras" 
-
-if not os.path.exists(model_path):
-    st.warning("Downloading model from Google Drive...")
-    gdown.download(id=file_id, output=model_path, quiet=False)
-
-
+file_id = '1IvSyBlzxBky9a9SbRxpHpTgAHEGKvxNY'
 model_path = "trained_plant_disease_model.keras"
+
+if not os.path.exists(model_path) or os.path.getsize(model_path) < 1_000_000:
+    st.warning("Downloading model from Google Drive...")
+    url = f"https://drive.google.com/uc?id={file_id}"
+    gdown.download(url, model_path, quiet=False, fuzzy=True)
+if os.path.getsize(model_path) < 1_000_000:
+    st.error("Model download failed — check Google Drive sharing settings (must be 'Anyone with the link').")
+    st.stop()
 def model_prediction(test_image):
     model = tf.keras.models.load_model(model_path)
     image = tf.keras.preprocessing.image.load_img(test_image,target_size=(128,128))
