@@ -10,7 +10,7 @@ model_path = "trained_plant_disease_model.keras"
 if not os.path.exists(model_path) or os.path.getsize(model_path) < 1_000_000:
     st.warning("Downloading model from Google Drive...")
     url = f"https://drive.google.com/uc?id={file_id}"
-    gdown.download(url=url, output=model_path, quiet=False, fuzzy=True)
+    gdown.download(url=url, output=model_path, quiet=False)
 if os.path.getsize(model_path) < 1_000_000:
     st.error("Model download failed — check Google Drive sharing settings (must be 'Anyone with the link').")
     st.stop()
